@@ -164,7 +164,16 @@ return seconds /
     365.25; /* 365.25 days in year */
 }
 
-
+function secureMathRandom() {
+    if (window.crypto && window.crypto.getRandomValues) {
+    }
+    else {
+        alert("Your browser does not have a Cryptographically Secure Random Number Generator (CSRNG)!")
+        throw new Error("Secure Random Number Generator is unavailable")
+    }
+  // Divide a random UInt32 by the maximum value (2^32 -1) to get a result between 0 and 1
+  return window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
+}
     </script>
     <script>
         /**
@@ -199,7 +208,7 @@ return seconds /
                 currRoll = "";
 
                 for (var ele of dices) {
-                    currRandNum = Math.floor(Math.random() * 6 + 1);
+                    currRandNum = Math.floor(secureMathRandom() * 6 + 1);
                     ele.className = "dice dice--value-" + currRandNum;
                     currRoll += currRandNum;
                 }
